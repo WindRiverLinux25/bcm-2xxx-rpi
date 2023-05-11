@@ -18,7 +18,7 @@ Signed-off-by: Jason Wessel <jason.wessel@windriver.com>
 +++ b/include/configs/rpi.h
 @@ -206,6 +206,12 @@
  
- #define CONFIG_EXTRA_ENV_SETTINGS \
+ #define CFG_EXTRA_ENV_SETTINGS \
  	"dhcpuboot=usb start; dhcp u-boot.uimg; bootm\0" \
 +	"use_fdtdtb=2\0" \
 +	"initrd_addr=0x03000000\0" \

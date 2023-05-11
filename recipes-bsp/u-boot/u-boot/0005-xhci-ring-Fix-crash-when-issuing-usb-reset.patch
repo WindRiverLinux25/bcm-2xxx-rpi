@@ -31,7 +31,7 @@ index d6339f4f0a..f2a07204cd 100644
  	BUG();
  }
 @@ -505,11 +507,16 @@ static void abort_td(struct usb_device *udev, int ep_index)
- 	xhci_queue_command(ctrl, NULL, udev->slot_id, ep_index, TRB_STOP_RING);
+ 	xhci_queue_command(ctrl, 0, udev->slot_id, ep_index, TRB_STOP_RING);
  
  	event = xhci_wait_for_event(ctrl, TRB_TRANSFER);
 -	field = le32_to_cpu(event->trans_event.flags);
