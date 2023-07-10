@@ -24,7 +24,7 @@ when using the Wind River setup.sh wrapper.
 
 License
 -------
-Copyright (C) 2019 Wind River Systems, Inc.
+Copyright (C) 2023 Wind River Systems, Inc.
 
 Source code included in the tree for individual recipes is under the LICENSE
 stated in the associated recipe (.bb file) unless otherwise stated.
@@ -55,16 +55,16 @@ THE SOFTWARE.
 The following table summarizes the valid Wind River Linux distros for this BSP.
 'Y' in each content cell stands for supported; 'N' stands for not supported:
 
-  +--------------+-------------+-------------+
-  | valid/distro |   wrlinux   | wrlinux-ovp |
-  +--------------+-------------+-------------+
-  |    valid     |      Y      |      N      |
-  +--------------+-------------+-------------+
+  +--------------+-------------+------------------+
+  | valid/distro |   wrlinux   | wrlinux-graphics |
+  +--------------+-------------+------------------+
+  |    valid     |      Y      |         Y        |
+  +--------------+-------------+------------------+
 
 For the supported kernel type for this BSP, please check the TARGET_SUPPORTED_KTYPES
 by running 'bitbake -e virtual/kernel | grep "^TARGET_SUPPORTED_KTYPES="'.
 
-Note: The preempt-rt ktype is not available for this BSP/Machine at this time.
+Note: The preempt-rt kernel type can be used with this BSP/Machine.
 
 
 3. Board Specific Patches
@@ -364,16 +364,20 @@ Output as below:
 12. LCD
 =======
 
-Raspberrypi4 B platform supports 7 inch HDMI LCD Display-B with
-resolution 800x480 and capacitive touch control. To enable LCD feature,
-it is need to add below configuration parameter in config.txt file.
+Raspberrypi4 B platform supports below 2 kinds of LCD Display and capacitive touch control.
+ - 7 inch HDMI LCD Display-B with resolution 800x480
+ - 7 inch HDMI LCD Display-C with resolution 1024x600
+To enable LCD feature, it needs to add below configuration parameter in config.txt file.
 
 	hdmi_force_hotplug=1
 	max_usb_current=1
 	hdmi_group=2
-	hdmi_mode=1
 	hdmi_mode=87
+	For HDMI LCD Display-B:
 	hdmi_cvt 800 480 60 6 0 0 0
+	For HDMI LCD Display-C:
+	hdmi_cvt 1024 600 60 6 0 0 0
+
 
 13. Boot From USB Disk
 ======================
