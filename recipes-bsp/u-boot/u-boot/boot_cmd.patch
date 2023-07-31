@@ -11,7 +11,7 @@ Signed-off-by: Jason Wessel <jason.wessel@windriver.com>
 --- a/configs/rpi_arm64_defconfig
 +++ b/configs/rpi_arm64_defconfig
 @@ -51,3 +51,4 @@ CONFIG_PHYS_TO_BUS=y
- CONFIG_OF_LIBFDT_OVERLAY=y
+ CONFIG_PHYS_TO_BUS=y
  CONFIG_MENU=y
  CONFIG_CMD_BOOTMENU=y
 +CONFIG_CMD_BOOTCOMMAND="run bootcmd_mmc0"
