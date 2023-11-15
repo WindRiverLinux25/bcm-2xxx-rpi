@@ -169,7 +169,7 @@ on SD card after board power on, and then put the dtb at address 0x2eff5c00
 4.1.4 Set bootargs and boot system
 ----------------------------------
 
-	# setenv bootargs console=ttyS0,115200n8 root=/dev/nfs rw nfsroot=<nfs server>:<nfs root>,v3,tcp \
+	# setenv bootargs console=ttyS0,115200n8 root=/dev/nfs rw nfsroot=<nfs server>:<nfs root> \
 		 ip=<target IP>::<gateway>:<netmask>::eth0:off \
 	# booti 0x00080000 - 0x02600000
 
@@ -178,7 +178,7 @@ For Raspberrypi4, please use below commands
 	# fdt addr ${fdt_addr}
 	# fdt resize
 	# fdt get value bootargs1 /chosen bootargs
-	# setenv bootargs "${bootargs1} root=/dev/nfs nfsroot=<nfs server>:<nfs root>,v3,tcp ip=dhcp"
+	# setenv bootargs "${bootargs1} root=/dev/nfs nfsroot=<nfs server>:<nfs root> ip=dhcp"
 	# booti ${kernel_addr_r} - ${fdt_addr}
 
 
