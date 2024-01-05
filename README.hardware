@@ -77,7 +77,7 @@ the corresponding h/w features exist.
 3.2 Unsupported Features
 ------------------------
 
-The following features are not supported and validated:
+The following features are not supported and not validated:
 	x DPI interface
 	x Power Management
 		x Suspend to RAM
