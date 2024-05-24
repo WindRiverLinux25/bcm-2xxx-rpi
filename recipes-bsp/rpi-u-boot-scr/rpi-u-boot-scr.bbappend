@@ -9,7 +9,7 @@ do_compile:bcm-2xxx-rpi4() {
         sed -e 's/@@KERNEL_IMAGETYPE@@/Image/' \
             -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
             -e '/if test ! -e mmc 0:1 uboot.env; then saveenv; fi;/d' \
-            "${WORKDIR}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
+            "${S}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
     fi
     mkimage -A arm -T script -C none -n "Boot script" -d "${WORKDIR}/boot.cmd" boot.scr
 }
