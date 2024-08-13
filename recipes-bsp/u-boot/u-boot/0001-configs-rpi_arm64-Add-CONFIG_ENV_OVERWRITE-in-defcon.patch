@@ -19,7 +19,7 @@ After the change:
 => setenv ethaddr 00:E0:0C:00:06:0
 => setenv ethaddr 00:E0:0C:00:06:1
 
-Upstream-Status: Inappropriate [wr-bsp specific]
+Upstream-Status: Pending
 
 Signed-off-by: Meng Li <Meng.Li@windriver.com>
 ---

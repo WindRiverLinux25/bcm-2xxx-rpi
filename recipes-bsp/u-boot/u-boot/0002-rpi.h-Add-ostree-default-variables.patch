@@ -1,7 +1,7 @@
-From c22dd8e4d1fe6311d989471ce05274def52b3774 Mon Sep 17 00:00:00 2001
-From: Rajeshkumar Ramasamy <rajeshkumar.ramasamy@windriver.com>
-Date: Wed, 11 Oct 2023 04:18:35 +0000
-Subject: [PATCH] [PATCH 2/2] rpi.env: Add ostree default variables
+From 6e0ab5cd51a27abaa94c0716d9d6c139fab02184 Mon Sep 17 00:00:00 2001
+From: Jason Wessel <jason.wessel@windriver.com>
+Date: Thu, 21 Nov 2019 20:11:51 -0800
+Subject: [PATCH] rpi.h: Add ostree default variables
 
 The ostree configuration requires several additional default variables
 to be configured in the environment to properly boot the first time
@@ -9,19 +9,19 @@ before there is a saved environment file.
 
 Upstream-Status: Inappropriate [ ostree specific ]
 
-Signed-off-by: Rajeshkumar Ramasamy <rajeshkumar.ramasamy@windriver.com>
+Signed-off-by: Jason Wessel <jason.wessel@windriver.com>
 ---
  board/raspberrypi/rpi/rpi.env | 6 ++++++
  1 file changed, 6 insertions(+)
 
 diff --git a/board/raspberrypi/rpi/rpi.env b/board/raspberrypi/rpi/rpi.env
-index 30228285ed..7d447279f6 100644
+index 30228285..0a539616 100644
 --- a/board/raspberrypi/rpi/rpi.env
 +++ b/board/raspberrypi/rpi/rpi.env
-@@ -73,5 +73,11 @@ scriptaddr=0x02400000
- pxefile_addr_r=0x02500000
- fdt_addr_r=0x02600000
- ramdisk_addr_r=0x02700000
+@@ -3,6 +3,12 @@
+ /* environment for Raspberry Pi boards */
+
+ dhcpuboot=usb start; dhcp u-boot.uimg; bootm
 +use_fdtdtb=2
 +initrd_addr=0x03000000
 +console=ttyS0
@@ -29,7 +29,8 @@ index 30228285ed..7d447279f6 100644
 +loadaddr=0x00080000
 +mmcdev=0
  
- boot_targets=mmc usb pxe dhcp
+ /* Environment */
+ stdin=serial,usbkbd
 -- 
-2.40.0
+2.35.5
 

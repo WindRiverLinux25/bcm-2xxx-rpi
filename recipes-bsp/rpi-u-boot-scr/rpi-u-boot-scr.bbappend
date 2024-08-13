@@ -3,11 +3,13 @@ do_compile:bcm-2xxx-rpi4() {
     if [ -n "${EXTERNAL_BOOT_CMD_IN}" -a -f "${EXTERNAL_BOOT_CMD_IN}" ]; then
         sed -e 's/@@KERNEL_IMAGETYPE@@/Image/' \
             -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
+            -e 's/@@BOOT_MEDIA@@/${BOOT_MEDIA}/' \
             -e '/if test ! -e mmc 0:1 uboot.env; then saveenv; fi;/d' \
             "${EXTERNAL_BOOT_CMD_IN}" > "${WORKDIR}/boot.cmd"
     else
         sed -e 's/@@KERNEL_IMAGETYPE@@/Image/' \
             -e 's/@@KERNEL_BOOTCMD@@/${KERNEL_BOOTCMD}/' \
+            -e 's/@@BOOT_MEDIA@@/${BOOT_MEDIA}/' \
             -e '/if test ! -e mmc 0:1 uboot.env; then saveenv; fi;/d' \
             "${S}/boot.cmd.in" > "${WORKDIR}/boot.cmd"
     fi

@@ -1,6 +1,6 @@
-From 874884e31bb0513bc8c3ebb4fcd7ab0b8b1df31b Mon Sep 17 00:00:00 2001
-From: Meng Li <Meng.Li@windriver.com>
-Date: Thu, 11 May 2023 15:47:45 +0800
+From 800f42e6ffea1e20aa713509f4b2b30c07485fdc Mon Sep 17 00:00:00 2001
+From: Jason Wessel <jason.wessel@windriver.com>
+Date: Tue, 23 Nov 2021 16:21:30 +0800
 Subject: [PATCH] qemu-arm64: Defaults for booting with ostree
 
 Set reasonable defaults for using booting with an ostree provided boot.scr.
@@ -20,7 +20,7 @@ Signed-off-by: Hongxu Jia <hongxu.jia@windriver.com>
  2 files changed, 8 insertions(+)
 
 diff --git a/board/emulation/qemu-arm/qemu-arm.env b/board/emulation/qemu-arm/qemu-arm.env
-index fb4adef281..1be97ab6d0 100644
+index fb4adef2..1be97ab6 100644
 --- a/board/emulation/qemu-arm/qemu-arm.env
 +++ b/board/emulation/qemu-arm/qemu-arm.env
 @@ -8,6 +8,11 @@ stderr=serial,vidconsole
@@ -36,16 +36,19 @@ index fb4adef281..1be97ab6d0 100644
  pxefile_addr_r=0x40300000
  kernel_addr_r=0x40400000
 diff --git a/configs/qemu_arm64_defconfig b/configs/qemu_arm64_defconfig
-index c010c25a92..bce329ac58 100644
+index c010c25a..14b453fc 100644
 --- a/configs/qemu_arm64_defconfig
 +++ b/configs/qemu_arm64_defconfig
-@@ -69,3 +69,6 @@ CONFIG_USB_EHCI_HCD=y
- CONFIG_USB_EHCI_PCI=y
- CONFIG_SEMIHOSTING=y
- CONFIG_TPM=y
+@@ -34,6 +34,9 @@ CONFIG_CMD_DFU=y
+ CONFIG_CMD_MTD=y
+ CONFIG_CMD_PCI=y
+ CONFIG_CMD_TPM=y
 +CONFIG_MENU=y
 +CONFIG_CMD_BOOTMENU=y
 +CONFIG_PREBOOT="test -n ${fdtcontroladdr} && setenv fdt_addr ${fdtcontroladdr}"
+ CONFIG_CMD_MTDPARTS=y
+ CONFIG_ENV_IS_IN_FLASH=y
+ CONFIG_SCSI_AHCI=y
 -- 
 2.35.5
 

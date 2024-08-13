@@ -1,0 +1,34 @@
+From 50242f9c2b6ce44efe0e1767832e9b6153e7195d Mon Sep 17 00:00:00 2001
+From: Jason Wessel <jason.wessel@windriver.com>
+Date: Tue, 30 Jun 2020 12:23:44 -0700
+Subject: [PATCH 2/4] xhci-ring: Fix crash when issuing "usb reset"
+
+If a "usb reset" is issued when the poll_pend state is set the
+abort_td() function will hit one of the BUG() statements in abort_td()
+or the BUG() statement at the end of xhci_wait_for_event().
+
+The controller has been reset, so the rest of the cleanup should be
+skipped and poll_pend flag should be cleared.
+
+Upstream-Status: Pending
+
+Signed-off-by: Jason Wessel <jason.wessel@windriver.com>
+---
+ drivers/usb/host/xhci-ring.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index b5e4f410..a0ca8f00 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -503,6 +503,8 @@ union xhci_trb *xhci_wait_for_event(struct xhci_ctrl *ctrl, trb_type expected)
+	if (expected == TRB_TRANSFER)
+		return NULL;
+
++	if (poll_pend)
++		return NULL;
+	printf("XHCI timeout on event type %d...\n", expected);
+
+	return NULL;
+--
+2.35.5

@@ -1,4 +1,4 @@
-From 376c1f69063ee6c08854d27270799c96a78bdab0 Mon Sep 17 00:00:00 2001
+From 761ca6c50c1511cff989731dddd059a8f924ac12 Mon Sep 17 00:00:00 2001
 From: Meng Li <Meng.Li@windriver.com>
 Date: Fri, 23 Apr 2021 16:18:09 +0800
 Subject: [PATCH] config: add BSP specific configuration in config.txt
@@ -73,5 +73,5 @@ index e28ed02..99459e5 100644
 +# Force arm in 64bit mode. See: https://github.com/raspberrypi/firmware/issues/1193.
 +arm_64bit=1
 -- 
-2.35.5
+2.44.0
 
