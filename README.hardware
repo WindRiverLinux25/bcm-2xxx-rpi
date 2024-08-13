@@ -23,9 +23,7 @@ This BSP supports the following boards:
 2. Change History
 =================
 
-  - 2019/10 (LINUXPG-100): WindRiver CI/CD branch support, support Raspberry Pi 4 Model B board
-                         based on Yocto Community kernel
-  - 2020/02 (LINUXPG-249): WindRiver Linux LTS1019, support Raspberry Pi 4 Model B board, full features.
+  - 2024/11 (LINUXPG-2309): WindRiver CI/CD branch, support Raspberry Pi 4 Model B board.
 
 3. BSP Features
 ===============
@@ -95,6 +93,6 @@ in a different environment it may possibly have some issues.
 
 	Processor:              BCM2711 (Cortex-A72)
 	BootLoader:             Raspberry bootloader/GPU firmware and U-Boot
-	BootLoader Version:     Raspberrypi firmware Release version "20220830"
-				U-Boot 2023.01 (Jan 09 2023 - 16:07:33 +0000)
+	BootLoader Version:     Raspberrypi firmware Release version "20240229"
+				U-Boot 2024.01 (Jan 08 2024 - 15:37:48 +0000)
 
