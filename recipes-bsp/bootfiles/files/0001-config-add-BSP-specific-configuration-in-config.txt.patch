@@ -1,4 +1,4 @@
-From 53343ddf2d82ee0952efc5b68a818367d52efc86 Mon Sep 17 00:00:00 2001
+From 376c1f69063ee6c08854d27270799c96a78bdab0 Mon Sep 17 00:00:00 2001
 From: Meng Li <Meng.Li@windriver.com>
 Date: Fri, 23 Apr 2021 16:18:09 +0800
 Subject: [PATCH] config: add BSP specific configuration in config.txt
@@ -6,13 +6,15 @@ Subject: [PATCH] config: add BSP specific configuration in config.txt
 Create a patch to add BSP specific  configuration in config.txt
 so that keep consistent with the previous one.
 
+Upstream-Status: Pending
+
 Signed-off-by: Meng Li <Meng.Li@windriver.com>
 ---
  config.txt | 23 ++++++++++++++++++++++-
  1 file changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/config.txt b/config.txt
-index e28ed02..271b43d 100644
+index e28ed02..99459e5 100644
 --- a/config.txt
 +++ b/config.txt
 @@ -659,7 +659,7 @@
@@ -48,10 +50,10 @@ index e28ed02..271b43d 100644
  
  ## i2c_arm
  ##     Enable the ARM's i2c interface
-@@ -1465,6 +1468,24 @@
- ##     Default 35.
+@@ -1478,3 +1481,21 @@
+ ##     Information can be found in overlays/README
  ##
- #dtparam=pwr_led_gpio=35
+ #dtoverlay=act-led,activelow=off
 +[pi3]
 +dtparam=i2c_arm=on
 +dtparam=spi=on
@@ -70,9 +72,6 @@ index e28ed02..271b43d 100644
 +
 +# Force arm in 64bit mode. See: https://github.com/raspberrypi/firmware/issues/1193.
 +arm_64bit=1
- 
- ################################################################################
- ##  Base Device Tree Overlays
 -- 
 2.35.5
 
