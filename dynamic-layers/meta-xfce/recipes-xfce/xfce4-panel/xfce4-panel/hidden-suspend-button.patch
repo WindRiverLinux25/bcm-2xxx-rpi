@@ -9,15 +9,15 @@ Signed-off-by: Kai Kang <kai.kang@windriver.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/plugins/actions/actions.c b/plugins/actions/actions.c
-index f87fd35..482496f 100644
+index b16d38e..8ae5e6b 100644
 --- a/plugins/actions/actions.c
 +++ b/plugins/actions/actions.c
-@@ -1283,7 +1283,7 @@ actions_plugin_default_array (void)
-       "+lock-screen",
-       "+switch-user",
-       "+separator",
--      "+suspend",
-+      "-suspend",
-       "-hibernate",
-       "-hybrid-sleep",
-       "-separator",
+@@ -1444,7 +1444,7 @@ actions_plugin_default_array (void)
+     "+lock-screen",
+     "+switch-user",
+     "+separator",
+-    "+suspend",
++    "-suspend",
+     "-hibernate",
+     "-hybrid-sleep",
+     "-separator",
