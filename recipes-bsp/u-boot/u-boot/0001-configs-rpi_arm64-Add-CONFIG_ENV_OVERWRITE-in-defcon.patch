@@ -1,4 +1,4 @@
-From 752b3a0740954fb0dad132f2f147f1e4482ef367 Mon Sep 17 00:00:00 2001
+From b18075cfbf3fcea741ffc61e1f666d34a3ace583 Mon Sep 17 00:00:00 2001
 From: Meng Li <Meng.Li@windriver.com>
 Date: Fri, 9 Apr 2021 07:42:04 +0000
 Subject: [PATCH] configs: rpi_arm64: Add CONFIG_ENV_OVERWRITE in defconfig
@@ -27,17 +27,17 @@ Signed-off-by: Meng Li <Meng.Li@windriver.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/configs/rpi_arm64_defconfig b/configs/rpi_arm64_defconfig
-index 2639219a1a..cb0efd55ca 100644
+index 87204c75..074cf9d5 100644
 --- a/configs/rpi_arm64_defconfig
 +++ b/configs/rpi_arm64_defconfig
-@@ -20,6 +20,7 @@ CONFIG_CMD_FS_UUID=y
+@@ -32,6 +32,7 @@ CONFIG_CMD_EFIDEBUG=y
  CONFIG_CMD_FS_UUID=y
  CONFIG_ENV_FAT_DEVICE_AND_PART="0:1"
  CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG=y
 +CONFIG_ENV_OVERWRITE=y
  CONFIG_TFTP_TSIZE=y
  CONFIG_DM_DMA=y
- CONFIG_BCM2835_GPIO=y
+ CONFIG_DFU_MMC=y
 -- 
-2.29.2
+2.47.1
 
