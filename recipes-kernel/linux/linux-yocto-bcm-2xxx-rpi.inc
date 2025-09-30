@@ -3,7 +3,8 @@
 #
 
 TARGET_SUPPORTED_KTYPES:rpi = "standard preempt-rt"
-COMPATIBLE_MACHINE:rpi = "bcm-2xxx-rpi4"
+COMPATIBLE_MACHINE:rpi = "(bcm-2xxx-rpi4|bcm-2xxx-rpi5)"
+KMACHINE:rpi = "bcm-2xxx-rpi4"
 
 inherit siteinfo
 KERNEL_DTC_FLAGS:append:rpi = " -@ -H epapr"

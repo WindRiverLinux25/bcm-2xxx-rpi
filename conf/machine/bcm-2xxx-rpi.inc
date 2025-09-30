@@ -7,6 +7,22 @@ require conf/machine/include/arm/armv8a/tune-cortexa72.inc
 require conf/machine/include/soc-family.inc
 SOC_FAMILY = "rpi"
 
+EXTRA_IMAGECMD:jffs2 = "--pad --no-cleanmarkers --eraseblock=128"
+
+DISTRO_FEATURES:append = " wifi bluetooth"
+
+# The linux-firmware is required by kernel module
+WIFI_KERNEL_PACKAGES ?= " \
+  linux-firmware-bcm43430 \
+  linux-firmware-bcm43455 \
+"
+
+KERNEL_BOOTCMD ?= "booti"
+BOOT_MEDIA ?= "mmc"
+
+UBOOT_MACHINE = "rpi_arm64_config"
+KERNEL_IMAGETYPE_UBOOT ?= "Image"
+
 MACHINE_FEATURES += "usbhost ext3 screen alsa vfat"
 
 KERNEL_IMAGETYPE = ""
@@ -54,6 +70,8 @@ RPI_KERNEL_DEVICETREE_OVERLAYS ?= " \
     overlays/w1-gpio.dtbo \
     overlays/gpio-ir.dtbo \
     overlays/gpio-ir-tx.dtbo \
+    overlays/ov5647.dtbo \
+    overlays/vc4-kms-v3d-pi5.dtbo  \
 "
 
 def make_dtb_boot_files(d):
@@ -106,3 +124,39 @@ QB_SERIAL_OPT = "-device virtio-serial-device -chardev null,id=virtcon -device v
 QB_TCPSERIAL_OPT = "-device virtio-serial-device -chardev socket,id=virtcon,port=@PORT@,host=127.0.0.1 -device virtconsole,chardev=virtcon"
 
 WATCHDOG_TIMEOUT = "15"
+
+INITRAMFS_IMAGE ??= ""
+IMAGE_BOOT_FILES:append = " ${@bb.utils.contains('DISTRO_FEATURES', 'ostree', '${INITRAMFS_IMAGE}-${MACHINE}.${INITRAMFS_FSTYPES};initramfs', '', d)}"
+
+NON_MULTILIB_RECIPES:append = " boot-config"
+NON_MULTILIB_RECIPES:append = " rpi-u-boot-scr"
+
+IMAGE_BOOT_FILES ?= " bcm2835-bootfiles/* \
+                Image ${@make_dtb_boot_files(d)} \
+                u-boot.bin;${SDIMG_KERNELIMAGE} boot.scr \
+"
+
+BOOTFILES_DIR_NAME ?= "bcm2835-bootfiles"
+
+OSTREE_BOOTSCR_PRECMD ?= "setenv skip_script_fdt yes;"
+SKIP_SCRIPT_FDT ?= "yes"
+
+OSTREE_KERNEL ?= "Image"
+OSTREE_FDISK_FSZ ?= "128"
+OSTREE_SD_UBOOT_WIC1 ?= ""
+OSTREE_SD_UBOOT_WIC2 ?= ""
+OSTREE_SD_UBOOT_WIC3 ?= ""
+OSTREE_SD_UBOOT_WIC4 ?= ""
+OSTREE_UBOOT_CMD ?= "booti"
+# Don't set a default dtb for the board, the u-boot loads it into the fdt_addr
+# automatically, a lot of devices would not work if we load it again to
+# override fdt_addr.
+DEFAULT_DTB ?= ""
+OSTREE_COPY_IMAGE_BOOT_FILES = "1"
+OSTREE_NETINST_DEV ?= "/dev/mmcblk0,/dev/sda,/dev/vda"
+OSTREE_NETINST_ARGS ?= "${OSTREE_CONSOLE} bl=ufsd rdinit=/install instdev=${OSTREE_NETINST_DEV} instname=${OSTREE_OSNAME} instbr=\$BRANCH insturl=\$URL instab=${OSTREE_USE_AB} instsf=1 instdate=BUILD_DATE"
+
+OSTREE_WIFI_PACKAGES = " \
+  packagegroup-base-wifi \
+  ${WIFI_KERNEL_PACKAGES} \
+"
