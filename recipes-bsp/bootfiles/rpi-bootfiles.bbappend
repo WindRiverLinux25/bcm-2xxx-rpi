@@ -1,4 +1,4 @@
-do_deploy:append:bcm-2xxx-rpi4() {
+do_deploy:append:rpi() {
     # Add LICENSE file with disclaimer
     (cd ${S} ; ls -C -w 80 *.bin *.dat *.elf) > ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}/LICENSE.broadcom
     cat<<EOF>> ${DEPLOYDIR}/${BOOTFILES_DIR_NAME}/LICENSE.broadcom
@@ -16,4 +16,4 @@ EOF
 # there is a build warning reported when build it. If convert to git protocol, it needs to create a mirror
 # of firmware repo that is more than 20GB, it will be a huge resource consumption. Therefore, mask the warning
 # directly.
-WARN_QA:remove:bcm-2xxx-rpi4 = "src-uri-bad"
+WARN_QA:remove:rpi = "src-uri-bad"

@@ -1,4 +1,4 @@
-MACHINE_FEATURES:append:bcm-2xxx-rpi4 = " vc4graphics"
+MACHINE_FEATURES:append:rpi = " vc4graphics"
 
 XSERVER = " \
     xserver-xorg \
