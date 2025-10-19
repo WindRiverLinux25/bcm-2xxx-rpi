@@ -13,10 +13,10 @@ Signed-off-by: Meng Li <Meng.Li@windriver.com>
  config.txt | 23 ++++++++++++++++++++++-
  1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/config.txt b/config.txt
-index e28ed02..99459e5 100644
---- a/config.txt
-+++ b/config.txt
+Index: git/config.txt
+===================================================================
+--- git.orig/config.txt
++++ git/config.txt
 @@ -659,7 +659,7 @@
  ##     32       Has no corruption issues but needs framebuffer_ignore_alpha=1
  ##              and shows the wrong colors as of 2012/06/15
@@ -50,7 +50,7 @@ index e28ed02..99459e5 100644
  
  ## i2c_arm
  ##     Enable the ARM's i2c interface
-@@ -1478,3 +1481,21 @@
+@@ -1478,3 +1481,19 @@
  ##     Information can be found in overlays/README
  ##
  #dtoverlay=act-led,activelow=off
@@ -66,12 +66,7 @@ index e28ed02..99459e5 100644
 +disable_splash=1
 +# Enable UART
 +enable_uart=1
-+# Enable VC4 Graphics
-+dtoverlay=vc4-fkms-v3d
 +kernel=kernel8.img
 +
 +# Force arm in 64bit mode. See: https://github.com/raspberrypi/firmware/issues/1193.
 +arm_64bit=1
--- 
-2.44.0
-
