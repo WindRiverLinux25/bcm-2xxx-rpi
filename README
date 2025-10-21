@@ -297,9 +297,20 @@ device, the config.txt should contain:
 
 gpu_mem could select others value like 256 or 512.
 
+For Raspberrypi4
+----------------
+
 To run camera test case with below commands:
 # export DISPLAY=:0
 # gst-launch-1.0 v4l2src device=/dev/video0 ! video/x-raw,format=YUY2,width=320,height=240 ! videoconvert ! autovideosink
+
+For Raspberrypi5
+----------------
+
+cam -l
+
+cam --camera 1 --stream width=640,height=480,pixelformat=SBGGR12 \
+> --capture=20 --file=picture.raw
 
 10. SPI and I2C
 ===============
@@ -328,7 +339,15 @@ The following description show how to verify graphics feature.
 
 Detail command as below:
 
+For Raspberrypi4
+----------------
+
 	# <path-of-wrlinux-x>/setup.sh --machine bcm-2xxx-rpi4 --distro wrlinux-graphics --dl-layers --all-layers --accept-eula=yes
+
+For Raspberrypi5
+----------------
+
+	# <path-of-wrlinux-x>/setup.sh --machine bcm-2xxx-rpi5 --distro wrlinux-graphics --dl-layers --all-layers --accept-eula=yes
 
 11.2 Build Image
 ----------------
