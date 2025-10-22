@@ -6,4 +6,6 @@ SRC_URI:append:rpi = " \
 VC4DTBO:bcm-2xxx-rpi4 ?= "vc4-fkms-v3d"
 VC4DTBO:bcm-2xxx-rpi5 ?= "vc4-kms-v3d-pi5"
 ENABLE_UART:rpi ?= "1"
-
+do_deploy:append:rpi () {
+	echo 'camera_auto_detect=1' >> $CONFIG
+}
