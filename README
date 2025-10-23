@@ -195,6 +195,20 @@ The microcode is typically installed in /lib/firmware/brcm.
 5.2 Usage and verification
 --------------------------
 
+For Raspberrypi5
+----------------
+
+The bcm43455 RaspberryPi5 firmware is provided by the linux-firmware-rpidistro
+package. As this firmware is governed by a third-party license, please ensure
+you add the following configuration steps to your local.conf file.
+Note that wrlinux does not include this firmware by default.
+
+  CUSTOMER_RECIPES:raspberrypi += 'linux-firmware-rpidistro'
+  LICENSE_FLAGS_ACCEPTED = "synaptics-killswitch"
+  MACHINE_EXTRA_RRECOMMENDS += "\
+      linux-firmware-rpidistro-bcm43455 \
+  "
+
 Execute the following commands to validate the WIFI eature:
 
 	# ifconfig wlan<idx> up
