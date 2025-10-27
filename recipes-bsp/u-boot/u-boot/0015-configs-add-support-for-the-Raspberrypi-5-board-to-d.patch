@@ -1,0 +1,52 @@
+From ac432eb6920266ce9b983fcaff92aadb88036728 Mon Sep 17 00:00:00 2001
+From: Oleksii Moisieiev <oleksii_moisieiev@epam.com>
+Date: Wed, 22 May 2024 18:53:25 +0300
+Subject: [PATCH 15/20] configs: add support for the Raspberrypi 5 board to
+ default config
+
+Add the default configuration file for RPI5 board.
+To build u-boot for Raspberrypi 5 the following command should be
+used:
+> make rpi_arm64_defconfig CROSS_COMPILE=aarch64-linux-gnu-
+
+Upstream-Status: Pending
+
+Signed-off-by: Oleksii Moisieiev <oleksii_moisieiev@epam.com>
+Reviewed-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+---
+ configs/rpi_arm64_defconfig | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/configs/rpi_arm64_defconfig b/configs/rpi_arm64_defconfig
+index 9fe5d177..bff8e894 100644
+--- a/configs/rpi_arm64_defconfig
++++ b/configs/rpi_arm64_defconfig
+@@ -1,6 +1,7 @@
+ CONFIG_ARM=y
+ CONFIG_POSITION_INDEPENDENT=y
+ CONFIG_ARCH_BCM283X=y
++CONFIG_BCM2712=y
+ CONFIG_TARGET_RPI_ARM64=y
+ CONFIG_ENV_SIZE=0x4000
+ CONFIG_DEFAULT_DEVICE_TREE="bcm2711-rpi-4-b"
+@@ -63,4 +64,16 @@ CONFIG_SYS_WHITE_ON_BLACK=y
+ CONFIG_VIDEO_BCM2835=y
+ CONFIG_CONSOLE_SCROLL_LINES=10
+ CONFIG_PHYS_TO_BUS=y
++CONFIG_RESET_BRCMSTB=y
++CONFIG_MFD_RP1=y
++CONFIG_PCI_PNP=y
++CONFIG_RESET_RASPBERRYPI=y
++CONFIG_RESET_BRCMSTB_RESCAL=y
++CONFIG_MACB=y
++CONFIG_CLK=y
++CONFIG_CLK_RP1=y
++CONFIG_OF_REAL=y
++CONFIG_RP1_GPIO=y
++CONFIG_BOARD_LATE_INIT=y
++CONFIG_BOARD_TYPES=y
+ # CONFIG_HEXDUMP is not set
+-- 
+2.43.0
+
