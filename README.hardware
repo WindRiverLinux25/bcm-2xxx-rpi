@@ -56,8 +56,11 @@ the corresponding h/w features exist.
 	+ USB3: 2 USB ports
 
   o Multimedia:
-        + HDMI: one HDMI port on board
-        + AUDIO: the 3.5in jack connector on board or through HDMI.
+        + HDMI: one HDMI port on board (Raspberry Pi4)
+        + HDMI: two HDMI ports on board (Raspberry Pi5)
+        + AUDIO:
+                + 3.5mm audio jack on board (Raspberry Pi4)
+                + through the HDMI port (Raspberry Pi5)
         + Camera: Video camera support with V4L2 controller
         + GPU: V3D 4.2 and OpenGL ES 3.1
         + LCD: 7 inch HDMI LCD Display-B with resolution 800x480 and capacitive touch control
@@ -97,3 +100,8 @@ in a different environment it may possibly have some issues.
 	BootLoader:             Raspberry bootloader/GPU firmware and U-Boot
 	BootLoader Version:     Raspberrypi firmware Release version "20240229"
 				U-Boot 2025.01 (Jan 07 2025 - 00:54:44 +0000)
+
+	Processor:              BCM2712 (Cortex-A76)
+	BootLoader:		Raspberry bootloader/GPU firmware and U-Boot
+	BootLoader Version:	RPi: BOOTSYS release VERSION:2bb2ae64 DATE: 2025/03/10 TIME: 17:10:37
+				U-Boot 2025.01-g6d41f0a39d64-dirty (Jan 07 2025 - 00:54:44 +0000)
