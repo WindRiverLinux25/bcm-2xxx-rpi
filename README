@@ -155,19 +155,6 @@ and are copied to the directory of the TFTP server.
 
 	# tftp 0x00080000 Image
 
-Note:
-For Raspberrypi4, there is not network in u-boot, so load kernel from SD card
-	# fatload mmc 0:1 ${kernel_addr_r} Image
-
-4.1.3 Download dtb
-------------------
-
-	# tftp 0x02600000 <Board Name>.dtb
-
-Note:
-For Raspberrypi4, there is no need to load dtb file. Because Raspberrypi special boorloader modify dtb file
-on SD card after board power on, and then put the dtb at address 0x2eff5c00
-
 4.1.4 Set bootargs and boot system
 ----------------------------------
 
@@ -176,7 +163,7 @@ on SD card after board power on, and then put the dtb at address 0x2eff5c00
 	# booti 0x00080000 - 0x02600000
 
 Note:
-For Raspberrypi4, please use below commands
+For Raspberrypi, please use below commands
 	# fdt addr ${fdt_addr}
 	# fdt resize
 	# fdt get value bootargs1 /chosen bootargs
