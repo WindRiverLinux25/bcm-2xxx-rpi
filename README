@@ -316,7 +316,7 @@ cam --camera 1 --stream width=640,height=480,pixelformat=SBGGR12 \
 10. SPI and I2C
 ===============
 
-To enable the SPI and I2C device, some parameters need to set in the config.txt:
+Note: For Raspberrypi4 To enable the SPI and I2C device, some parameters need to set in the config.txt:
 
 Enables SPI driver with 'dtparam=spi=on'
 Enables I2C on GPIO pins with 'dtparam=i2c_arm=on'
