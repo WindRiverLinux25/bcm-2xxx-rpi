@@ -264,8 +264,8 @@ To enable the audio device, the config.txt should contain 'dtparam=audio=on'.
 To load audio driver in WRLinux:
 $ sudo modprobe snd-bcm2835
 
-8.1 Audio playback(headphone)
------------------------------
+8.1 Only Raspberrypi4 Audio playback(headphone)
+-----------------------------------------------
 
 Verify with below command
 
@@ -274,9 +274,21 @@ Verify with below command
 8.2 Audio playback(HDMI)
 ------------------------
 
+For Raspberrypi4
+----------------
+
 Verify with below command
 
 	# speaker-test -c2 -twav -Dhw:0,1
+
+For Raspberrypi5
+----------------
+
+	speaker-test -c2  -Dhdmi:CARD=vc4hdmi{number},DEV=0
+
+Note: If you are using aplay to play a WAV file, please add -f IEC958_SUBFRAME_LE, for example:
+
+	aplay -f IEC958_SUBFRAME_LE Noise.wav
 
 Note:
 The following command is used to switch the audio output
