@@ -1,0 +1,56 @@
+From ede5d537e04701d38c54faf502f637e5a3167d8d Mon Sep 17 00:00:00 2001
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
+Date: Wed, 5 Nov 2025 15:51:49 +0800
+Subject: [PATCH] mfd: rp1: Fix Unable to handle kernel NULL
+
+The rp1irqchip defines an array of 64 irq_data pointers,
+but not all of them are used. However, during kdump, each
+interrupt is irq masked, which can lead to a NULL pointer
+access. Therefore, a check is added: when irq_data is empty,
+no action is taken.
+
+Call trace:
+ pci_msi_mask_irq+0xc/0xa0
+ machine_crash_shutdown+0xa4/0x118
+ __crash_kexec+0x90/0x180
+ panic+0x180/0x378
+ sysrq_handle_crash+0x24/0x30
+ __handle_sysrq+0xa8/0x1b0
+ write_sysrq_trigger+0xec/0x118
+ proc_reg_write+0xa4/0x100
+ vfs_write+0xdc/0x380
+ ksys_write+0x7c/0x120
+ __arm64_sys_write+0x24/0x40
+
+Upstream-Status: Pending
+
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+---
+ drivers/mfd/rp1.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/mfd/rp1.c b/drivers/mfd/rp1.c
+index af0047ee3b96..3aa193d1e97e 100644
+--- a/drivers/mfd/rp1.c
++++ b/drivers/mfd/rp1.c
+@@ -106,6 +106,8 @@ static void rp1_mask_irq(struct irq_data *irqd)
+ 	struct rp1_dev *rp1 = irqd->domain->host_data;
+ 	struct irq_data *pcie_irqd = rp1->pcie_irqds[irqd->hwirq];
+ 
++	if (!pcie_irqd)
++		return;
+ 	pci_msi_mask_irq(pcie_irqd);
+ }
+ 
+@@ -114,6 +116,8 @@ static void rp1_unmask_irq(struct irq_data *irqd)
+ 	struct rp1_dev *rp1 = irqd->domain->host_data;
+ 	struct irq_data *pcie_irqd = rp1->pcie_irqds[irqd->hwirq];
+ 
++	if (!pcie_irqd)
++		return;
+ 	pci_msi_unmask_irq(pcie_irqd);
+ }
+ 
+-- 
+2.43.0
+

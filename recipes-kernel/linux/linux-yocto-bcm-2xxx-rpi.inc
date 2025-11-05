@@ -14,4 +14,6 @@ SRC_URI:append:rpi = " \
     file://0001-ARM-dts-enable-cgroup-memory-controller-by-default.patch \
     file://0001-drm-v3d-Using-spin_lock_irqsave-instead-of-spin_lock.patch \
     file://0001-arm64-dts-enable-cgroup-memory-controller-for-raspbe.patch \
+    file://0001-mfd-rp1-Fix-Unable-to-handle-kernel-NULL.patch \
+    file://rpi.cfg \
 "
