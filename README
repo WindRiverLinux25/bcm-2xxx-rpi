@@ -75,64 +75,12 @@ Note: The preempt-rt kernel type can be used with this BSP/Machine.
 To get a list of patches applied to the kernel specific to this BSP along with
 patch descriptions use git-whatchanged on the default kernel. For example:
 
-	%> cd tmp-glibc/work-shared/<bsp_name>/kernel-source
+	%> cd tmp/work-shared/<bsp_name>/kernel-source
 	%> git whatchanged <kernel_version>/standard/base..<kernel_version>/standard/<bsp_name>
 
 
 4. Boot Instructions
 ====================
-
-It is necessary to load the DTB (device tree blob) into the target's memory
-prior to booting the kernel Image. The DTB file can be found in the export
-directory after building a project, or you can generate it manually with the
-following commands:
-
-To generate the DTB manually, change to the build directory, then run
-the following commands:
-
-	% bitbake -c devshell virtual/kernel
-	% make broadcom\bcm2711-rpi-4-b.dtb
-
-The dtb can then be found in the
-  .../linux-<bsp_name>-<kernel type>-build/arch/arm64/boot/dts/broadcom
-directory.
-
-Typical u-boot settings apply to these boards. You will need to use
-setenv, printenv and saveenv, to configure, display and store your network 
-configuration details and kernel command line respectively. In order to
-TFTP a kernel, you need, minimally, to set the following:
-
-	- ipaddr
-	- gatewayip
-	- netmask
-	- serverip
-	- loadaddr
-	- dtbfile
-	- dtbaddr
-	- ethaddr
-	- eth1addr
-
-Your board may ship with the values for the MAC address of
-the Ethernet interfaces set to the defaults compiled into the
-u-boot image. You should set the ethaddr, eth1addr and so on
-as per the manufacturer assigned values, usually indicated with
-a sticker on the board.
-
-Target specifics are usually set in the "bootargs" variable, and the
-kernel image is set in the "bootfile" variable. Don't forget that if you
-want these values to be available after a power cycle, you will need to run
-the saveenv command.
-
-Typically, convenience macros exist that will create a complete bootargs
-command line for the kernel based on variables that contain individual
-settings.  Since these macros exist as env variables themselves, they
-may or may not be present depending on who installed and configured
-u-boot for the board.
-
-The console device for the board is ttyS0 at 115200 baud. For the DTB
-address, 0x3000000 has been used with success by Wind River. The load address
-must be high enough to not interfere with kernel decompression. A value
-of 0x1000000 was used with success for all kernels tested by Wind River.
 
 4.1 NFS Root File System
 ------------------------
@@ -249,6 +197,7 @@ After build the project, user will get a WIC image under the directory
 tmp-glibc/deploy/images/<bsp name>/, such as:
 
 tmp-glibc/deploy/images/bcm-2xxx-rpi4/wrlinux-image-std-bcm-2xxx-rpi4.wic
+tmp-glibc/deploy/images/bcm-2xxx-rpi5/wrlinux-image-std-bcm-2xxx-rpi5.rootfs.wic
 
 7.1 Run wic image
 -----------------
@@ -322,8 +271,7 @@ For Raspberrypi5
 
 cam -l
 
-cam --camera 1 --stream width=640,height=480,pixelformat=SBGGR12 \
-> --capture=20 --file=picture.raw
+cam --camera 1 --stream width=640,height=480,pixelformat=SBGGR12 --capture=20 --file=picture.raw
 
 10. SPI and I2C
 ===============
@@ -395,20 +343,25 @@ Output as below:
 	300 frames in 5.0 seconds = 59.952 FPS
 	300 frames in 5.0 seconds = 59.952 FPS
 
-12. LCD
-=======
+12. HDMI
+========
 
-Raspberrypi4 B platform supports below 2 kinds of LCD Display and capacitive touch control.
- - 7 inch HDMI LCD Display-B with resolution 800x480
- - 7 inch HDMI LCD Display-C with resolution 1024x600
-To enable LCD feature, it needs to add below configuration parameter in config.txt file.
+Both Raspberry Pi 4 and Raspberry Pi 5 have two HDMI ports,
+allowing you to connect a monitor that supports HDMI. The
+following parameters are required for Raspberry Pi 4, but
+not for Raspberry Pi 5.
 
 	hdmi_force_hotplug=1
 	max_usb_current=1
 	hdmi_group=2
 	hdmi_mode=87
+
+Resolution configuration:
+
+resolution 800x480:
 	For HDMI LCD Display-B:
 	hdmi_cvt 800 480 60 6 0 0 0
+resolution 1024x600:
 	For HDMI LCD Display-C:
 	hdmi_cvt 1024 600 60 6 0 0 0
 
