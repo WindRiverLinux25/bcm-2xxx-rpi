@@ -1,0 +1,74 @@
+From e3061df592c7286d575fb0d1c850d0550b469241 Mon Sep 17 00:00:00 2001
+From: Meng Li <Meng.Li@windriver.com>
+Date: Wed, 5 Nov 2025 11:10:39 +0800
+Subject: [PATCH] drm/v3d: Using spin_lock_irqsave instead of spin_lock in the
+ RT kernel
+
+Disabling interrupts before calling 'spin_lock()' is unnecessary,
+its implementation is only for satisfying lockdep's requirements.
+Since preemption is disabled by default when calling 'spin_lock()'
+in the standard kernel, both 'local_irq_save()' and 'preempt_disable()'
+become redundant. Therefore, we can replace 'spin_lock()' with
+'spin_lock_irqsave()' to ensure compatibility between the standard
+kernel and the rt kernel. Avoid the following warning:
+
+BUG: sleeping function called from invalid context at /kernel/locking/spinlock_rt.c:48
+
+in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 314, name: irq/166-v3d_cor
+
+CPU: 0 UID: 0 PID: 314 Comm: irq/166-v3d_cor Tainted: G W 6.12.53-rt6-yocto-preempt-rt #1
+Tainted: [W]=WARN
+Hardware name: Raspberry Pi 5 Model B Rev 1.0 (DT) Call trace:
+dump_backtrace.part.0+0xe0/0x100
+show_stack+0x20/0x40
+dump_stack_lvl+0x60/0x80 dump_stack+0x18/0x28
+__might_resched+0x134/0x168
+rt_spin_lock+0x5c/0xe0
+v3d_job_update_stats+0x64/0x1d0 [v3d]
+v3d_irq+0xf0/0x410 [v3d]
+irq_forced_thread_fn+0x44/0xd8
+irq_thread+0x1ac/0x2d8
+kthread+0x124/0x138
+ret_from_fork+0x10/0x20
+
+Upstream-Status: Submitted
+
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+---
+ drivers/gpu/drm/v3d/v3d_sched.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
+index c6921268d8f8..1ca24b4294a4 100644
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -202,24 +202,13 @@ v3d_job_update_stats(struct v3d_job *job, enum v3d_queue q)
+ 	u64 now = local_clock();
+ 	unsigned long flags;
+ 
+-	/* See comment in v3d_job_start_stats() */
+-	if (IS_ENABLED(CONFIG_LOCKDEP))
+-		local_irq_save(flags);
+-	else
+-		preempt_disable();
+-
+ 	/* Don't update the local stats if the file context has already closed */
+-	spin_lock(&queue->queue_lock);
++	spin_lock_irqsave(&queue->queue_lock, flags);
+ 	if (job->file_priv)
+ 		v3d_stats_update(&job->file_priv->stats[q], now);
+-	spin_unlock(&queue->queue_lock);
++	spin_unlock_irqrestore(&queue->queue_lock, flags);
+ 
+ 	v3d_stats_update(global_stats, now);
+-
+-	if (IS_ENABLED(CONFIG_LOCKDEP))
+-		local_irq_restore(flags);
+-	else
+-		preempt_enable();
+ }
+ 
+ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+-- 
+2.34.1
+
