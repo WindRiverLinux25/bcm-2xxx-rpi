@@ -86,7 +86,7 @@ The following features are not supported and not validated:
 		x Suspend to RAM
 		x CPU Hotplug
 		x CPU idle
-	x USB controllers in U-boot
+	x USB controllers in U-boot (Only Raspberrypi5)
 
 4. BSP Notes
 ============

@@ -87,7 +87,7 @@ patch descriptions use git-whatchanged on the default kernel. For example:
 
 4.1.1 Prepare Kernel, DTB, NFS and TFTP servers
 -----------------------------------------------
-The files in below example can be found in <buildprj>/tmp-glibc/deploy/images/<machine name>
+The files in below example can be found in <buildprj>/tmp/deploy/images/<machine name>
 and are copied to the directory of the TFTP server.
 
 4.1.2 Set environments for booting image from network
@@ -194,10 +194,10 @@ https://docs.yoctoproject.org/singleindex.html#creating-partitioned-images-using
 
 This BSP supports disk images for SD card.
 After build the project, user will get a WIC image under the directory
-tmp-glibc/deploy/images/<bsp name>/, such as:
+tmp/deploy/images/<bsp name>/, such as:
 
-tmp-glibc/deploy/images/bcm-2xxx-rpi4/wrlinux-image-std-bcm-2xxx-rpi4.wic
-tmp-glibc/deploy/images/bcm-2xxx-rpi5/wrlinux-image-std-bcm-2xxx-rpi5.rootfs.wic
+tmp/deploy/images/bcm-2xxx-rpi4/wrlinux-image-std-bcm-2xxx-rpi4.rootfs.wic
+tmp/deploy/images/bcm-2xxx-rpi5/wrlinux-image-std-bcm-2xxx-rpi5.rootfs.wic
 
 7.1 Run wic image
 -----------------
@@ -366,8 +366,8 @@ resolution 1024x600:
 	hdmi_cvt 1024 600 60 6 0 0 0
 
 
-13. Boot From USB Disk
-======================
+13. Boot From USB Disk(Only Raspberry Pi4)
+==========================================
 
 The latest Raspberry pi firmware supports for booting system from USB 3.0 Disk.
 The detail boot command as below:
