@@ -393,3 +393,63 @@ By default, the u-boot image is compiled and installed. If you want u-boot to be
 compiled separately, use the following command：
 
         # bitbake u-boot
+
+
+15. kexec/kdump
+===============
+
+To build the boot or capture kernel, use the following option with the configure
+command for your project:
+
+     --templates feature/kexec feature/kdump
+
+15.1 kexec
+----------
+
+Follow below steps to verify kexec feature:
+
+1>. Power on board, boot up system with SD or NET rootfs.
+
+2>. Copy Image into rootfs, for example, $HOME directory.
+
+3>. Run below command to boot the second kernel quickly
+
+    # KDUMP_CMDLINE="`cat /proc/cmdline`"
+    # kexec -d -l /root/Image --append="$KDUMP_CMDLINE"
+    # kexec -e
+
+15.2 kdump
+----------
+
+To reserve a memory region for the capture kernel, pass "crashkernel=1024M"
+via the U-Boot command line.
+
+Follow below steps to verify kdump feature:
+
+1>. Power on board, enter u-boot command line, and then run below command to boot system
+
+    => setenv get_bootargs "fdt addr ${fdt_addr}; fdt resize; fdt get value bootargs1 /chosen bootargs"
+    => setenv update_bootargs 'setenv bootargs "${bootargs1} ip=dhcp crashkernel=1024M"'
+    => setenv bootcmd "run get_bootargs; run update_bootargs; fatload mmc 0:1 ${kernel_addr_r} Image; booti ${kernel_addr_r} - ${fdt_addr}"
+    => run bootcmd
+
+2>. Copy Image into rootfs, for example, $HOME directory.
+
+3>. Run below command to disable kdump service
+
+    # systemctl disable kdump.service
+
+4>. Run below command to start crash kernel
+
+    # KDUMP_CMDLINE="`cat /proc/cmdline`"
+    # KDUMP_CMDLINE=${KDUMP_CMDLINE// ip=dhcp/}
+    # kexec -d -p /root/Image --append="$KDUMP_CMDLINE maxcpus=1"
+    # echo c > /proc/sysrq-trigger
+
+5>. After crash kernel boots up, check the vmcore
+
+    # ls -la /proc/vmcore
+      -r-------- 1 root root 7540781056 May 29 21:47 /proc/vmcore
+
+Note: There are something wrong with ethernet driver of crash kernel, so it doesn't support for NFS
+      when booting up the crash kernel. User needs to boot crash kernel with SD rootfs.
