@@ -99,8 +99,8 @@ in a different environment it may possibly have some issues.
 
 	Processor:              BCM2711 (Cortex-A72)
 	BootLoader:             Raspberry bootloader/GPU firmware and U-Boot
-	BootLoader Version:     Raspberrypi firmware Release version "20240229"
-				U-Boot 2025.01 (Jan 07 2025 - 00:54:44 +0000)
+	BootLoader Version:     Raspberrypi firmware Release version "20250430"
+				U-Boot 2025.01-g6d41f0a39d64-dirty (Jan 07 2025 - 00:54:44 +0000)
 
 	Processor:              BCM2712 (Cortex-A76)
 	BootLoader:		Raspberry bootloader/GPU firmware and U-Boot
