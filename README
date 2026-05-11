@@ -418,6 +418,8 @@ Follow below steps to verify kexec feature:
     # kexec -d -l /root/Image --append="$KDUMP_CMDLINE"
     # kexec -e
 
+Note: Raspberry Pi 4 does not support kexec due to the lack of CPU hotplug support.
+
 15.2 kdump
 ----------
 
@@ -451,5 +453,6 @@ Follow below steps to verify kdump feature:
     # ls -la /proc/vmcore
       -r-------- 1 root root 7540781056 May 29 21:47 /proc/vmcore
 
-Note: There are something wrong with ethernet driver of crash kernel, so it doesn't support for NFS
-      when booting up the crash kernel. User needs to boot crash kernel with SD rootfs.
+Note: The Ethernet driver does not function correctly in the crash kernel environment.
+      As a result, NFS rootfs is not supported for the crash kernel. Use an SD card
+      rootfs instead.
